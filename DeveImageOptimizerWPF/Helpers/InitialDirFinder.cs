@@ -4,7 +4,7 @@ namespace DeveImageOptimizerWPF.Helpers
 {
     public static class InitialDirFinder
     {
-        public static string FindStartingDirectoryBasedOnInput(string inputDir)
+        public static string? FindStartingDirectoryBasedOnInput(string inputDir)
         {
             var startDir = inputDir;
 

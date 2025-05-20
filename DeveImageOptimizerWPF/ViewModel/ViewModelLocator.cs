@@ -34,7 +34,7 @@ namespace DeveImageOptimizerWPF.ViewModel
         public SettingsViewModel? Settings => ResolveViewModelOrThrow<SettingsViewModel>();
         public ConsoleViewModel? Console => ResolveViewModelOrThrow<ConsoleViewModel>();
 
-        private T ResolveViewModelOrThrow<T>()
+        private T ResolveViewModelOrThrow<T>() where T : class
         {
             var viewModel = App.Current?.Services.GetService<T>();
             if (viewModel == null)

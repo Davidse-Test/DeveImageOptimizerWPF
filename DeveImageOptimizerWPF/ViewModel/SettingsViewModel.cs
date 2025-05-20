@@ -57,43 +57,43 @@ namespace DeveImageOptimizerWPF.ViewModel
         public ICommand BrowseCommandFileOptimizer { get; private set; }
         private async void BrowseCommandFileOptimizerImp()
         {
-            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
-            if (topLevel == null) return;
+            //var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
+            //if (topLevel == null) return;
 
-            var fileDialog = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
-            {
-                Title = "Select FileOptimizer executable",
-                AllowMultiple = false,
-                FileTypeFilter = new[] 
-                { 
-                    new FilePickerFileType("FileOptimizer") { Patterns = new[] { "FileOptimizer.exe", "FileOptimizer64.exe" } },
-                    new FilePickerFileType("All files") { Patterns = new[] { "*.*" } }
-                }
-            });
+            //var fileDialog = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            //{
+            //    Title = "Select FileOptimizer executable",
+            //    AllowMultiple = false,
+            //    FileTypeFilter = new[] 
+            //    { 
+            //        new FilePickerFileType("FileOptimizer") { Patterns = new[] { "FileOptimizer.exe", "FileOptimizer64.exe" } },
+            //        new FilePickerFileType("All files") { Patterns = new[] { "*.*" } }
+            //    }
+            //});
 
-            if (fileDialog.Count > 0)
-            {
-                UserSettingsData.FileOptimizerPath = fileDialog[0].Path.LocalPath;
-            }
+            //if (fileDialog.Count > 0)
+            //{
+            //    UserSettingsData.FileOptimizerPath = fileDialog[0].Path.LocalPath;
+            //}
         }
 
         public ICommand BrowseCommandTempDir { get; private set; }
 
         private async void BrowseCommandTempDirImp()
         {
-            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
-            if (topLevel == null) return;
+            //var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
+            //if (topLevel == null) return;
 
-            var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
-            {
-                Title = "Select Temp Directory",
-                AllowMultiple = false
-            });
+            //var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            //{
+            //    Title = "Select Temp Directory",
+            //    AllowMultiple = false
+            //});
 
-            if (folderDialog.Count > 0)
-            {
-                UserSettingsData.TempDirectory = folderDialog[0].Path.LocalPath;
-            }
+            //if (folderDialog.Count > 0)
+            //{
+            //    UserSettingsData.TempDirectory = folderDialog[0].Path.LocalPath;
+            //}
         }
     }
 }

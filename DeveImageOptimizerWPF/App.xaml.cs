@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using DeveImageOptimizerWPF.ViewModel;
 using DeveImageOptimizerWPF.ViewModel.ObservableData;
 using Microsoft.Extensions.DependencyInjection;
+using PropertyChanged;
 using System;
 
 namespace DeveImageOptimizerWPF
@@ -11,12 +12,13 @@ namespace DeveImageOptimizerWPF
     /// <summary>
     /// The Avalonia application for DeveImageOptimizer
     /// </summary>
+    [DoNotNotify]
     public partial class App : Application
     {
         /// <summary>
         /// Gets the current <see cref="App"/> instance in use
         /// </summary>
-        public static App? Current => Application.Current as App;
+        public static new App? Current => Application.Current as App;
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.

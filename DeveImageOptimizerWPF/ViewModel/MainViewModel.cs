@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using Avalonia.Controls;
 using System.Windows.Input;
+using MsBox.Avalonia;
+using Avalonia;
 
 namespace DeveImageOptimizerWPF.ViewModel
 {
@@ -118,38 +120,41 @@ namespace DeveImageOptimizerWPF.ViewModel
 
         private static async void ShowFileOptimizerNotFoundError(string? message)
         {
-            // Comment out this code for now as requested, but keep it in the codebase
-            /*
-            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
+            var messageBox = MessageBoxManager.GetMessageBoxStandard(
                 "Could not find FileOptimizer.exe",
                 message ?? "FileOptimizer.exe could not be found",
-                icon: MessageBox.Avalonia.Enums.Icon.Error);
-            
-            await messageBoxStandardWindow.Show();
-            */
-            
-            // Temporary placeholder: just log to console for now
-            Console.WriteLine("ERROR: Could not find FileOptimizer.exe - " + (message ?? "FileOptimizer.exe could not be found"));
+                icon: MsBox.Avalonia.Enums.Icon.Error);
+
+            await messageBox.ShowAsync();
         }
 
         public ICommand BrowseCommand { get; private set; }
 
         private async void BrowseCommandImp()
         {
-            // Get current window from Avalonia Application.Current
-            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
-            if (topLevel == null) return;
+            ////This can also be applied for SaveFilePicker.
+            //var files = await _target.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
+            //{
+            //    Title = title,
+            //    //You can add either custom or from the built-in file types. See "Defining custom file types" on how to create a custom one.
+            //    FileTypeFilter = new[] { ImageAll, FilePickerFileTypes.TextPlain }
+            //});
 
-            var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
-            {
-                Title = "Select Folder",
-                AllowMultiple = false
-            });
 
-            if (folderDialog.Count > 0)
-            {
-                WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
-            }
+            //// Get current window from Avalonia Application.Current
+            //var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
+            //if (topLevel == null) return;
+
+            //var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            //{
+            //    Title = "Select Folder",
+            //    AllowMultiple = false
+            //});
+
+            //if (folderDialog.Count > 0)
+            //{
+            //    WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
+            //}
         }
     }
 }
