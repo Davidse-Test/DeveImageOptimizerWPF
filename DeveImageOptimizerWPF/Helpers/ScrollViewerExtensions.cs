@@ -42,7 +42,7 @@ namespace DeveImageOptimizerWPF.Helpers
 
         private static void ScrollViewer_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (sender is ScrollViewer scroll && e.Property.Name == "Extent" || e.Property.Name == "Offset")
+            if (sender is ScrollViewer scroll && (e.Property.Name == "Extent" || e.Property.Name == "Offset"))
             {
                 // Check if we're at the bottom
                 _autoScroll = scroll.Offset.Y >= scroll.Extent.Height - scroll.Viewport.Height;

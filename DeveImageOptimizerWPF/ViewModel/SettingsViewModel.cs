@@ -57,7 +57,7 @@ namespace DeveImageOptimizerWPF.ViewModel
         public ICommand BrowseCommandFileOptimizer { get; private set; }
         private async void BrowseCommandFileOptimizerImp()
         {
-            var topLevel = TopLevel.GetTopLevel(App.Current?.MainWindow);
+            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
             if (topLevel == null) return;
 
             var fileDialog = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
@@ -81,7 +81,7 @@ namespace DeveImageOptimizerWPF.ViewModel
 
         private async void BrowseCommandTempDirImp()
         {
-            var topLevel = TopLevel.GetTopLevel(App.Current?.MainWindow);
+            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
             if (topLevel == null) return;
 
             var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions

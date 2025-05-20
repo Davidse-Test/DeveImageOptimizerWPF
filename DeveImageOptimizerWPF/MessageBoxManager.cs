@@ -10,8 +10,10 @@ namespace DeveImageOptimizerWPF
     /// </summary>
     public static class MessageBoxManager
     {
-        public static MessageBoxWindow GetMessageBoxStandardWindow(string title, string message, Icon icon = Icon.Info)
+        public static MessageBox.Avalonia.MessageBoxWindow GetMessageBoxStandardWindow(string title, string message, Icon icon = Icon.Info)
         {
+            // Comment out this code for now as requested
+            /*
             var msBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams
             {
                 ButtonDefinitions = ButtonEnum.Ok,
@@ -22,11 +24,22 @@ namespace DeveImageOptimizerWPF
             });
 
             return msBoxStandardWindow;
+            */
+            
+            // Use MessageBox.Avalonia directly without recursion
+            return MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams
+            {
+                ButtonDefinitions = ButtonEnum.Ok,
+                ContentTitle = title,
+                ContentMessage = message,
+                Icon = icon,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            });
         }
 
-        public static MessageBoxWindow GetMessageBoxStandardWindow(MessageBoxStandardParams @params)
+        public static MessageBox.Avalonia.MessageBoxWindow GetMessageBoxStandardWindow(MessageBoxStandardParams @params)
         {
-            return MessageBoxManager.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(@params);
+            return MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(@params);
         }
     }
 }

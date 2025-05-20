@@ -20,7 +20,7 @@ namespace DeveImageOptimizerWPF.State.MainWindowState
         public AutoFilteringObservableCollection<OptimizableFileUI> ProcessedFiles { get; set; } = new AutoFilteringObservableCollection<OptimizableFileUI>();
         public OptimizableFileUI SelectedProcessedFile { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private readonly object _logfilelockject = new object();
 

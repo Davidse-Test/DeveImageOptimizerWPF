@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 
 namespace DeveImageOptimizerWPF
 {
@@ -35,6 +36,11 @@ namespace DeveImageOptimizerWPF
         public LogViewer()
         {
             InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
         }
     }
 }

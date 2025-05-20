@@ -130,7 +130,8 @@ namespace DeveImageOptimizerWPF.ViewModel
 
         private async void BrowseCommandImp()
         {
-            var topLevel = TopLevel.GetTopLevel(App.Current?.MainWindow);
+            // Get current window from Avalonia Application.Current
+            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
             if (topLevel == null) return;
 
             var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions

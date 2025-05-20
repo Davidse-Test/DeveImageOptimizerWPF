@@ -37,7 +37,7 @@ namespace DeveImageOptimizerWPF.State.UserSettings
         public int LogLevel { get; set; }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public UserSettingsData()
         {
