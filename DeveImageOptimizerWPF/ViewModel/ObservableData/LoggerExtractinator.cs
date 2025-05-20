@@ -6,8 +6,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
+using Avalonia.Threading;
 
 namespace DeveImageOptimizerWPF.ViewModel.ObservableData
 {
@@ -76,8 +75,7 @@ namespace DeveImageOptimizerWPF.ViewModel.ObservableData
         private void Runner()
         {
             _isRunning = true;
-            var dispatcher = Application.Current?.Dispatcher;
-
+            
             while (_isRunning)
             {
                 var logLine = _reader.ReadLine();
@@ -108,14 +106,8 @@ namespace DeveImageOptimizerWPF.ViewModel.ObservableData
                                 //Swallow exception as this usually only happens when you kill the application
                             }
                         });
-                        if (dispatcher != null)
-                        {
-                            dispatcher.BeginInvoke(toInvoke);
-                        }
-                        else
-                        {
-                            toInvoke();
-                        }
+                        
+                        Dispatcher.UIThread.Post(toInvoke);
                     }
                     catch (Exception ex)
                     {

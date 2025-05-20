@@ -32,7 +32,7 @@ namespace DeveImageOptimizerWPF.ViewModel
     /// </summary>
     public class MainViewModel : ObservableRecipient
     {
-        public WindowState WindowState { get; set; }
+        public State.MainWindowState.WindowState WindowState { get; set; }
         public FileProgressState FilesProcessingState { get; set; }
 
         public bool PreviewEnabled { get; set; }

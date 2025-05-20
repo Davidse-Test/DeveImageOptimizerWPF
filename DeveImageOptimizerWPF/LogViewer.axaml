@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:logviewer="clr-namespace:DeveImageOptimizerWPF.LogViewerData"
+             mc:Ignorable="d" 
+             x:Name="LogViewerControl"
+             x:Class="DeveImageOptimizerWPF.LogViewer"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="baseStyle" Selector="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontSize" Value="{Binding LogViewerFontSize, ElementName=LogViewerControl}" />
+        </Style>
+    </UserControl.Resources>
+
+    <DockPanel Background="Black">
+        <ItemsControl ItemsSource="{Binding LogLines, ElementName=LogViewerControl}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.DataTemplates>
+                <DataTemplate DataType="{x:Type logviewer:LogEntry}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Index"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Date"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Classes="baseStyle" Text="{Binding DateTime}" Grid.Column="0" FontWeight="Bold" Margin="5,0,50,0"/>
+                        <TextBlock Classes="baseStyle" Text="{Binding Index}" Grid.Column="1" FontWeight="Bold" Margin="0,0,50,0" />
+                        <TextBlock Classes="baseStyle" Text="{Binding Message}" Grid.Column="2" TextWrapping="NoWrap"/>
+                    </Grid>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type logviewer:CollapsibleLogEntry}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Index"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Date"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Classes="baseStyle" Text="{Binding DateTime}" Grid.Column="0" FontWeight="Bold" Margin="5,0,5,0"/>
+                        <TextBlock Classes="baseStyle" Text="{Binding Index}" Grid.Column="1" FontWeight="Bold" Margin="0,0,2,0" />
+                        <TextBlock Classes="baseStyle" Text="{Binding Message}" Grid.Column="2" TextWrapping="Wrap"/>
+
+                        <ToggleButton x:Name="Expander" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Content="+" HorizontalAlignment="Right"/>
+                        <ItemsControl ItemsSource="{Binding Contents}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                  Name="Contents" IsVisible="False"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.DataTemplates>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>
