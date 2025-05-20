@@ -14,7 +14,7 @@ namespace DeveImageOptimizerWPF.Helpers
 
         static ScrollViewerExtensions()
         {
-            AlwaysScrollToEndProperty.Changed.AddClassHandler<ScrollViewer>((s, e) => OnAlwaysScrollToEndChanged(s, e));
+            AlwaysScrollToEndProperty.Changed.AddClassHandler<ScrollViewer>(OnAlwaysScrollToEndChanged);
         }
 
         private static void OnAlwaysScrollToEndChanged(ScrollViewer scrollViewer, AvaloniaPropertyChangedEventArgs e)
@@ -27,16 +27,31 @@ namespace DeveImageOptimizerWPF.Helpers
                 if (newValue)
                 {
                     scrollViewer.ScrollToEnd();
-                    scrollViewer.ScrollChanged += ScrollChanged;
+                    scrollViewer.PropertyChanged += ScrollViewer_PropertyChanged;
                 }
                 else
                 {
-                    scrollViewer.ScrollChanged -= ScrollChanged;
+                    scrollViewer.PropertyChanged -= ScrollViewer_PropertyChanged;
                 }
             }
             else
             {
                 throw new InvalidOperationException("The attached AlwaysScrollToEnd property can only be applied to ScrollViewer instances.");
+            }
+        }
+
+        private static void ScrollViewer_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (sender is ScrollViewer scroll && e.Property.Name == "Extent" || e.Property.Name == "Offset")
+            {
+                // Check if we're at the bottom
+                _autoScroll = scroll.Offset.Y >= scroll.Extent.Height - scroll.Viewport.Height;
+                
+                // If we have auto-scroll enabled and content changed, scroll to end
+                if (_autoScroll && e.Property.Name == "Extent")
+                {
+                    scroll.ScrollToEnd();
+                }
             }
         }
 
@@ -50,29 +65,6 @@ namespace DeveImageOptimizerWPF.Helpers
         {
             if (scrollViewer == null) { throw new ArgumentNullException(nameof(scrollViewer)); }
             scrollViewer.SetValue(AlwaysScrollToEndProperty, value);
-        }
-
-        private static void ScrollChanged(object? sender, ScrollChangedEventArgs e)
-        {
-            if (sender is ScrollViewer scroll)
-            {
-                // User scroll event : set or unset autoscroll mode
-                if (e.ExtentHeightChange == 0)
-                {
-                    _autoScroll = scroll.Offset.Y == scroll.ScrollBarMaximum.Y;
-                    scroll.SetValue(AlwaysScrollToEndProperty, _autoScroll);
-                }
-
-                // Content scroll event : autoscroll eventually
-                if (_autoScroll && e.ExtentHeightChange != 0)
-                {
-                    scroll.ScrollToEnd();
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("The attached AlwaysScrollToEnd property can only be applied to ScrollViewer instances.");
-            }
         }
     }
 }
