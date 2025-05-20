@@ -118,12 +118,18 @@ namespace DeveImageOptimizerWPF.ViewModel
 
         private static async void ShowFileOptimizerNotFoundError(string? message)
         {
+            // Comment out this code for now as requested, but keep it in the codebase
+            /*
             var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(
                 "Could not find FileOptimizer.exe",
                 message ?? "FileOptimizer.exe could not be found",
                 icon: MessageBox.Avalonia.Enums.Icon.Error);
             
             await messageBoxStandardWindow.Show();
+            */
+            
+            // Temporary placeholder: just log to console for now
+            Console.WriteLine("ERROR: Could not find FileOptimizer.exe - " + (message ?? "FileOptimizer.exe could not be found"));
         }
 
         public ICommand BrowseCommand { get; private set; }

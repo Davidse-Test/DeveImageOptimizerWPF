@@ -12,7 +12,7 @@ namespace DeveImageOptimizerWPF
     {
         public static MessageBox.Avalonia.MessageBoxWindow GetMessageBoxStandardWindow(string title, string message, Icon icon = Icon.Info)
         {
-            // Comment out this code for now as requested
+            // Comment out this code for now as requested, but keep it in the codebase
             /*
             var msBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams
             {
@@ -39,7 +39,14 @@ namespace DeveImageOptimizerWPF
 
         public static MessageBox.Avalonia.MessageBoxWindow GetMessageBoxStandardWindow(MessageBoxStandardParams @params)
         {
+            /*
+            // Comment out this code for now as requested, but keep it in the codebase
+            return MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(@params);
+            */
+            
+            // Temporary empty implementation
             return MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(@params);
         }
     }
+}
 }
