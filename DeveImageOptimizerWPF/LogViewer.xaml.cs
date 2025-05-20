@@ -1,6 +1,5 @@
 ﻿using DeveImageOptimizerWPF.LogViewerData;
 using IX.Observable;
-using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using Avalonia;
@@ -12,7 +11,6 @@ namespace DeveImageOptimizerWPF
     /// <summary>
     /// Interaction logic for LogViewer.axaml
     /// </summary>
-    [DoNotNotify]
     public partial class LogViewer : UserControl
     {
         public static readonly StyledProperty<ObservableQueue<LogEntry>> LogLinesProperty = AvaloniaProperty.Register<LogViewer, ObservableQueue<LogEntry>>(

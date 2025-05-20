@@ -4,7 +4,6 @@ using Avalonia.Markup.Xaml;
 using DeveImageOptimizerWPF.ViewModel;
 using DeveImageOptimizerWPF.ViewModel.ObservableData;
 using Microsoft.Extensions.DependencyInjection;
-using PropertyChanged;
 using System;
 
 namespace DeveImageOptimizerWPF
@@ -12,7 +11,6 @@ namespace DeveImageOptimizerWPF
     /// <summary>
     /// The Avalonia application for DeveImageOptimizer
     /// </summary>
-    [DoNotNotify]
     public partial class App : Application
     {
         /// <summary>

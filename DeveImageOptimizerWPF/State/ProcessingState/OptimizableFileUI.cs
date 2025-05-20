@@ -1,23 +1,54 @@
 ﻿using DeveCoolLib.Collections;
 using DeveImageOptimizer.State;
-using PropertyChanged;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 
 namespace DeveImageOptimizerWPF.State.ProcessingState
 {
-    [AddINotifyPropertyChangedInterface]
-    public class OptimizableFileUI
+    public class OptimizableFileUI : ObservableObject
     {
-        public string Path { get; set; }
-        public string RelativePath { get; set; }
+        private string _path;
+        public string Path
+        {
+            get => _path;
+            set => SetProperty(ref _path, value);
+        }
 
-        public OptimizationResult OptimizationResult { get; set; } = OptimizationResult.InProgress;
+        private string _relativePath;
+        public string RelativePath
+        {
+            get => _relativePath;
+            set => SetProperty(ref _relativePath, value);
+        }
 
-        public long OriginalSize { get; set; }
-        public long OptimizedSize { get; set; }
+        private OptimizationResult _optimizationResult = OptimizationResult.InProgress;
+        public OptimizationResult OptimizationResult
+        {
+            get => _optimizationResult;
+            set => SetProperty(ref _optimizationResult, value);
+        }
 
-        public TimeSpan Duration { get; set; } = TimeSpan.Zero;
+        private long _originalSize;
+        public long OriginalSize
+        {
+            get => _originalSize;
+            set => SetProperty(ref _originalSize, value);
+        }
+
+        private long _optimizedSize;
+        public long OptimizedSize
+        {
+            get => _optimizedSize;
+            set => SetProperty(ref _optimizedSize, value);
+        }
+
+        private TimeSpan _duration = TimeSpan.Zero;
+        public TimeSpan Duration
+        {
+            get => _duration;
+            set => SetProperty(ref _duration, value);
+        }
 
         public ObservableCollection<string> Errors { get; } = new ObservableCollection<string>();
 

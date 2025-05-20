@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using PropertyChanged;
 using System;
 
 namespace DeveImageOptimizerWPF.Helpers

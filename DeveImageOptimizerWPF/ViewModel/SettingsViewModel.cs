@@ -4,7 +4,6 @@ using DeveImageOptimizerWPF.State;
 using DeveImageOptimizerWPF.State.UserSettings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,16 +14,42 @@ using Avalonia.Controls;
 
 namespace DeveImageOptimizerWPF.ViewModel
 {
-    [AddINotifyPropertyChangedInterface]
-    public class SettingsViewModel : ObservableRecipient
+    public class SettingsViewModel : ObservableObject
     {
-        public UserSettingsData UserSettingsData { get; }
+        private UserSettingsData _userSettingsData;
+        public UserSettingsData UserSettingsData
+        {
+            get => _userSettingsData;
+            set => SetProperty(ref _userSettingsData, value);
+        }
 
-        public IEnumerable<ImageOptimizationLevel> AvailableImageOptimizationLevels { get; }
-        public IEnumerable<int> MaxParallelismChoices { get; }
-        public IEnumerable<int> AvailableLogLevels { get; }
+        private IEnumerable<ImageOptimizationLevel> _availableImageOptimizationLevels;
+        public IEnumerable<ImageOptimizationLevel> AvailableImageOptimizationLevels
+        {
+            get => _availableImageOptimizationLevels;
+            set => SetProperty(ref _availableImageOptimizationLevels, value);
+        }
 
-        public IEnumerable<RemembererSettings> AvailableStorageModes { get; }
+        private IEnumerable<int> _maxParallelismChoices;
+        public IEnumerable<int> MaxParallelismChoices
+        {
+            get => _maxParallelismChoices;
+            set => SetProperty(ref _maxParallelismChoices, value);
+        }
+
+        private IEnumerable<int> _availableLogLevels;
+        public IEnumerable<int> AvailableLogLevels
+        {
+            get => _availableLogLevels;
+            set => SetProperty(ref _availableLogLevels, value);
+        }
+
+        private IEnumerable<RemembererSettings> _availableStorageModes;
+        public IEnumerable<RemembererSettings> AvailableStorageModes
+        {
+            get => _availableStorageModes;
+            set => SetProperty(ref _availableStorageModes, value);
+        }
 
         public SettingsViewModel()
         {

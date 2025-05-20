@@ -1,10 +1,14 @@
-using PropertyChanged;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DeveImageOptimizerWPF.Helpers
 {
-    [AddINotifyPropertyChangedInterface]
-    public class ScrollViewerExtensionConfig
+    public class ScrollViewerExtensionConfig : ObservableObject
     {
-        public bool AlwaysScrollToEnd { get; set; }
+        private bool _alwaysScrollToEnd;
+        public bool AlwaysScrollToEnd
+        {
+            get => _alwaysScrollToEnd;
+            set => SetProperty(ref _alwaysScrollToEnd, value);
+        }
     }
 }

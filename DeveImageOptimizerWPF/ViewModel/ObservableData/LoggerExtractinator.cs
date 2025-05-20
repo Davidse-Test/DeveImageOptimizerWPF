@@ -1,17 +1,17 @@
 ﻿using DeveCoolLib.Streams;
 using DeveImageOptimizerWPF.LogViewerData;
 using IX.Observable;
-using PropertyChanged;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DeveImageOptimizerWPF.ViewModel.ObservableData
 {
-    [AddINotifyPropertyChangedInterface]
-    public class LoggerExtractinator
+    public class LoggerExtractinator : ObservableObject
     {
         private static object _Lockject = new object();
         private static bool _HasInstance = false;
@@ -48,8 +48,20 @@ namespace DeveImageOptimizerWPF.ViewModel.ObservableData
         private bool _isRunning = false;
         private Task _runningTask;
 
-        public ObservableQueue<string> LogLines { get; set; } = new ObservableQueue<string>();
-        public ObservableQueue<LogEntry> LogLinesEntry { get; set; } = new ObservableQueue<LogEntry>();
+        private ObservableQueue<string> _logLines = new ObservableQueue<string>();
+        public ObservableQueue<string> LogLines
+        {
+            get => _logLines;
+            set => SetProperty(ref _logLines, value);
+        }
+
+        private ObservableQueue<LogEntry> _logLinesEntry = new ObservableQueue<LogEntry>();
+        public ObservableQueue<LogEntry> LogLinesEntry
+        {
+            get => _logLinesEntry;
+            set => SetProperty(ref _logLinesEntry, value);
+        }
+
         private int lineCount = 0;
 
         private LoggerExtractinator(MovingMemoryStream movingMemoryStream)
