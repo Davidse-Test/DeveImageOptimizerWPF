@@ -121,34 +121,34 @@ namespace DeveImageOptimizerWPF.ViewModel
         private static async void ShowFileOptimizerNotFoundError(string? message)
         {
             // MessageBox functionality commented out as requested
-            /*
+
             var messageBox = MessageBoxManager.GetMessageBoxStandard(
                 "Could not find FileOptimizer.exe",
                 message ?? "FileOptimizer.exe could not be found",
                 icon: MsBox.Avalonia.Enums.Icon.Error);
 
             await messageBox.ShowAsync();
-            */
+
         }
 
         public ICommand BrowseCommand { get; private set; }
 
         private async void BrowseCommandImp()
         {
-            // Get current window from TopLevel
-            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
-            if (topLevel == null) return;
+            //// Get current window from TopLevel
+            //var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
+            //if (topLevel == null) return;
 
-            var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
-            {
-                Title = "Select Folder",
-                AllowMultiple = false
-            });
+            //var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            //{
+            //    Title = "Select Folder",
+            //    AllowMultiple = false
+            //});
 
-            if (folderDialog.Count > 0)
-            {
-                WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
-            }
+            //if (folderDialog.Count > 0)
+            //{
+            //    WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
+            //}
         }
     }
 }
