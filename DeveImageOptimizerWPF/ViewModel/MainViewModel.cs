@@ -132,29 +132,20 @@ namespace DeveImageOptimizerWPF.ViewModel
 
         private async void BrowseCommandImp()
         {
-            ////This can also be applied for SaveFilePicker.
-            //var files = await _target.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
-            //{
-            //    Title = title,
-            //    //You can add either custom or from the built-in file types. See "Defining custom file types" on how to create a custom one.
-            //    FileTypeFilter = new[] { ImageAll, FilePickerFileTypes.TextPlain }
-            //});
+            // Get current window from TopLevel
+            var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
+            if (topLevel == null) return;
 
+            var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            {
+                Title = "Select Folder",
+                AllowMultiple = false
+            });
 
-            //// Get current window from Avalonia Application.Current
-            //var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
-            //if (topLevel == null) return;
-
-            //var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
-            //{
-            //    Title = "Select Folder",
-            //    AllowMultiple = false
-            //});
-
-            //if (folderDialog.Count > 0)
-            //{
-            //    WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
-            //}
+            if (folderDialog.Count > 0)
+            {
+                WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
+            }
         }
     }
 }
