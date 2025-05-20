@@ -32,7 +32,7 @@ namespace DeveImageOptimizerWPF.ViewModel
     /// </summary>
     public class MainViewModel : ObservableRecipient
     {
-        public State.MainWindowState.WindowState WindowState { get; set; }
+        public State.MainWindowState.WindowState AppWindowState { get; set; }
         public FileProgressState FilesProcessingState { get; set; }
 
         public bool PreviewEnabled { get; set; }
@@ -43,10 +43,10 @@ namespace DeveImageOptimizerWPF.ViewModel
 
         public MainViewModel()
         {
-            WindowState = StaticState.WindowStateManager.State;
+            AppWindowState = StaticState.WindowStateManager.State;
             FilesProcessingState = new FileProgressState();
 
-            WindowState.PropertyChanged += ProcessingStateData_PropertyChanged;
+            AppWindowState.PropertyChanged += ProcessingStateData_PropertyChanged;
             FilesProcessingState.PropertyChanged += FilesProcessingState_PropertyChanged;
 
             GoCommand = new AsyncRelayCommand(GoCommandImp);
@@ -99,7 +99,7 @@ namespace DeveImageOptimizerWPF.ViewModel
 
                 var fileProcessor = new DeveImageOptimizerProcessor(config, FilesProcessingState, _fileRememberer, _dirRememberer);
 
-                await fileProcessor.ProcessDirectory(WindowState.ProcessingDirectory);
+                await fileProcessor.ProcessDirectory(AppWindowState.ProcessingDirectory);
             }
             catch (FileOptimizerNotFoundException ex)
             {
@@ -148,7 +148,7 @@ namespace DeveImageOptimizerWPF.ViewModel
 
             if (folderDialog.Count > 0)
             {
-                WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
+                AppWindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
             }
         }
     }

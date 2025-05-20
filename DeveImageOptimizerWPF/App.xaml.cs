@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using DeveImageOptimizerWPF.ViewModel;
@@ -16,7 +17,7 @@ namespace DeveImageOptimizerWPF
         /// <summary>
         /// Gets the current <see cref="App"/> instance in use
         /// </summary>
-        public static App? Current => Application.Current as App;
+        public new static App? Current => Application.Current as App;
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.

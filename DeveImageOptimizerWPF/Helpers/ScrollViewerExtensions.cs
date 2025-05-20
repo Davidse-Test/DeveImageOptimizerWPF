@@ -21,8 +21,8 @@ namespace DeveImageOptimizerWPF.Helpers
         {
             if (scrollViewer != null)
             {
-                bool newValue = (bool)e.NewValue!;
-                bool oldValue = (bool)e.OldValue!;
+                bool newValue = (bool)(e.NewValue ?? false);
+                bool oldValue = (bool)(e.OldValue ?? false);
 
                 if (newValue)
                 {
@@ -45,7 +45,7 @@ namespace DeveImageOptimizerWPF.Helpers
             if (sender is ScrollViewer scroll && (e.Property.Name == "Extent" || e.Property.Name == "Offset"))
             {
                 // Check if we're at the bottom
-                _autoScroll = scroll.Offset.Y >= scroll.Extent.Height - scroll.Viewport.Height;
+                _autoScroll = Math.Abs(scroll.Offset.Y - (scroll.Extent.Height - scroll.Viewport.Height)) < 1;
                 
                 // If we have auto-scroll enabled and content changed, scroll to end
                 if (_autoScroll && e.Property.Name == "Extent")
