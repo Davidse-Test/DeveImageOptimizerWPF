@@ -1,7 +1,7 @@
-﻿using DeveImageOptimizerWPF.Helpers;
+using DeveImageOptimizerWPF.Helpers;
 using DeveImageOptimizerWPF.ViewModel.ObservableData;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using PropertyChanged;
 using System;
 using System.Windows.Input;

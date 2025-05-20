@@ -1,19 +1,17 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using Avalonia.Threading;
+using System.ComponentModel;
 
 namespace DeveImageOptimizerWPF.LogViewerData
 {
     public class PropertyChangedBase : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            Application.Current?.Dispatcher?.BeginInvoke(() =>
+            Dispatcher.UIThread.Post(() =>
             {
-                PropertyChangedEventHandler handler = PropertyChanged;
-                if (handler != null)
-                    handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             });
         }
     }

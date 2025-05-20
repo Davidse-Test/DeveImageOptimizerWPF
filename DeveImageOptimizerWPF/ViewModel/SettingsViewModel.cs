@@ -1,17 +1,17 @@
-﻿using DeveImageOptimizer.ImageOptimization;
+using DeveImageOptimizer.ImageOptimization;
 using DeveImageOptimizerWPF.Helpers;
 using DeveImageOptimizerWPF.State;
 using DeveImageOptimizerWPF.State.UserSettings;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Win32;
-using Ookii.Dialogs.Wpf;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using Avalonia.Platform.Storage;
+using Avalonia.Controls;
 
 namespace DeveImageOptimizerWPF.ViewModel
 {
@@ -55,40 +55,44 @@ namespace DeveImageOptimizerWPF.ViewModel
         }
 
         public ICommand BrowseCommandFileOptimizer { get; private set; }
-        private void BrowseCommandFileOptimizerImp()
+        private async void BrowseCommandFileOptimizerImp()
         {
-            var fileDialog = new OpenFileDialog()
-            {
-                Filter = "FileOptimizer (FileOptimizer.exe,FileOptimizer64.exe)|FileOptimizer.exe;FileOptimizer64.exe|All files (*.*)|*.*"
-            };
+            var topLevel = TopLevel.GetTopLevel(App.Current?.MainWindow);
+            if (topLevel == null) return;
 
-            string startDir = InitialDirFinder.FindStartingDirectoryBasedOnInput(UserSettingsData.FileOptimizerPath);
-            if (Directory.Exists(startDir))
+            var fileDialog = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
-                fileDialog.InitialDirectory = startDir;
-            }
+                Title = "Select FileOptimizer executable",
+                AllowMultiple = false,
+                FileTypeFilter = new[] 
+                { 
+                    new FilePickerFileType("FileOptimizer") { Patterns = new[] { "FileOptimizer.exe", "FileOptimizer64.exe" } },
+                    new FilePickerFileType("All files") { Patterns = new[] { "*.*" } }
+                }
+            });
 
-            if (fileDialog.ShowDialog() == true)
+            if (fileDialog.Count > 0)
             {
-                UserSettingsData.FileOptimizerPath = fileDialog.FileName;
+                UserSettingsData.FileOptimizerPath = fileDialog[0].Path.LocalPath;
             }
         }
 
         public ICommand BrowseCommandTempDir { get; private set; }
 
-        private void BrowseCommandTempDirImp()
+        private async void BrowseCommandTempDirImp()
         {
-            var folderDialog = new VistaFolderBrowserDialog();
+            var topLevel = TopLevel.GetTopLevel(App.Current?.MainWindow);
+            if (topLevel == null) return;
 
-            string startDir = InitialDirFinder.FindStartingDirectoryBasedOnInput(UserSettingsData.TempDirectory);
-            if (Directory.Exists(startDir))
+            var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
             {
-                folderDialog.SelectedPath = startDir;
-            }
+                Title = "Select Temp Directory",
+                AllowMultiple = false
+            });
 
-            if (folderDialog.ShowDialog() == true)
+            if (folderDialog.Count > 0)
             {
-                UserSettingsData.TempDirectory = folderDialog.SelectedPath;
+                UserSettingsData.TempDirectory = folderDialog[0].Path.LocalPath;
             }
         }
     }

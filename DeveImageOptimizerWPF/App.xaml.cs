@@ -1,34 +1,48 @@
-﻿using DeveImageOptimizerWPF.ViewModel;
+﻿using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using DeveImageOptimizerWPF.ViewModel;
 using DeveImageOptimizerWPF.ViewModel.ObservableData;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Windows;
 
 namespace DeveImageOptimizerWPF
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// The Avalonia application for DeveImageOptimizer
     /// </summary>
     public partial class App : Application
     {
-        public App()
-        {
-            Services = ConfigureServices();
-
-            this.InitializeComponent();
-
-            Console.WriteLine("DeveImageOptimizerWPF started");
-        }
-
         /// <summary>
         /// Gets the current <see cref="App"/> instance in use
         /// </summary>
-        public new static App Current => (App)Application.Current;
+        public static App? Current => Application.Current as App;
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
         /// </summary>
         public IServiceProvider Services { get; }
+
+        public App()
+        {
+            Services = ConfigureServices();
+            Console.WriteLine("DeveImageOptimizerWPF started");
+        }
+
+        public override void Initialize()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = new MainWindow();
+            }
+
+            base.OnFrameworkInitializationCompleted();
+        }
 
         /// <summary>
         /// Configures the services for the application.

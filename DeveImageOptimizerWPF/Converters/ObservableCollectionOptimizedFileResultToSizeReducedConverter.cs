@@ -1,17 +1,16 @@
-﻿using DeveCoolLib.Conversion;
+﻿using Avalonia.Data.Converters;
+using DeveCoolLib.Conversion;
 using DeveImageOptimizerWPF.State.ProcessingState;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Data;
 
 namespace DeveImageOptimizerWPF.Converters
 {
-    [ValueConversion(typeof(ObservableCollection<OptimizableFileUI>), typeof(string))]
     public sealed class ObservableCollectionOptimizedFileResultToSizeReducedConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -22,7 +21,7 @@ namespace DeveImageOptimizerWPF.Converters
             return ValuesToStringHelper.BytesToString(totalOptimizedSize, culture);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
