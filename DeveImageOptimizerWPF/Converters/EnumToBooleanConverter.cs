@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Avalonia.Data.Converters;
+using System;
 using System.Globalization;
-using System.Windows.Data;
 
 namespace DeveImageOptimizerWPF.Converters
 {
     public class EnumToBooleanConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null && parameter == null)
             {
@@ -19,9 +19,13 @@ namespace DeveImageOptimizerWPF.Converters
             return value.Equals(parameter);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return value.Equals(true) ? parameter : Binding.DoNothing;
+            if (value is bool boolValue && boolValue && parameter != null)
+            {
+                return parameter;
+            }
+            return null;
         }
     }
 }

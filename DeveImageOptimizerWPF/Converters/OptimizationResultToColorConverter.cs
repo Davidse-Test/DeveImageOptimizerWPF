@@ -1,15 +1,14 @@
-﻿using DeveImageOptimizer.State;
+﻿using Avalonia.Data.Converters;
+using Avalonia.Media;
+using DeveImageOptimizer.State;
 using System;
 using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Media;
 
 namespace DeveImageOptimizerWPF.Converters
 {
-    [ValueConversion(typeof(bool), typeof(string))]
     public sealed class OptimizationResultToColorConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -30,7 +29,7 @@ namespace DeveImageOptimizerWPF.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

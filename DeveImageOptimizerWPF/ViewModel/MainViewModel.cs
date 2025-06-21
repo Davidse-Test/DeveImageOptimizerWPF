@@ -6,14 +6,17 @@ using DeveImageOptimizerWPF.Helpers;
 using DeveImageOptimizerWPF.State;
 using DeveImageOptimizerWPF.State.MainWindowState;
 using DeveImageOptimizerWPF.State.UserSettings;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Ookii.Dialogs.Wpf;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Platform.Storage;
+using Avalonia.Controls;
 using System.Windows.Input;
+using MsBox.Avalonia;
+using Avalonia;
 
 namespace DeveImageOptimizerWPF.ViewModel
 {
@@ -31,7 +34,7 @@ namespace DeveImageOptimizerWPF.ViewModel
     /// </summary>
     public class MainViewModel : ObservableRecipient
     {
-        public WindowState WindowState { get; set; }
+        public State.MainWindowState.WindowState WindowState { get; set; }
         public FileProgressState FilesProcessingState { get; set; }
 
         public bool PreviewEnabled { get; set; }
@@ -115,27 +118,37 @@ namespace DeveImageOptimizerWPF.ViewModel
             }
         }
 
-        private static void ShowFileOptimizerNotFoundError(string? message)
+        private static async void ShowFileOptimizerNotFoundError(string? message)
         {
-            System.Windows.MessageBox.Show(message, "Could not find FileOptimizer.exe", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            // MessageBox functionality commented out as requested
+
+            var messageBox = MessageBoxManager.GetMessageBoxStandard(
+                "Could not find FileOptimizer.exe",
+                message ?? "FileOptimizer.exe could not be found",
+                icon: MsBox.Avalonia.Enums.Icon.Error);
+
+            await messageBox.ShowAsync();
+
         }
 
         public ICommand BrowseCommand { get; private set; }
 
-        private void BrowseCommandImp()
+        private async void BrowseCommandImp()
         {
-            var folderDialog = new VistaFolderBrowserDialog();
+            //// Get current window from TopLevel
+            //var topLevel = TopLevel.GetTopLevel(Application.Current?.MainWindow);
+            //if (topLevel == null) return;
 
-            string startDir = InitialDirFinder.FindStartingDirectoryBasedOnInput(WindowState.ProcessingDirectory);
-            if (Directory.Exists(startDir))
-            {
-                folderDialog.SelectedPath = startDir;
-            }
+            //var folderDialog = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            //{
+            //    Title = "Select Folder",
+            //    AllowMultiple = false
+            //});
 
-            if (folderDialog.ShowDialog() == true)
-            {
-                WindowState.ProcessingDirectory = folderDialog.SelectedPath;
-            }
+            //if (folderDialog.Count > 0)
+            //{
+            //    WindowState.ProcessingDirectory = folderDialog[0].Path.LocalPath;
+            //}
         }
     }
 }

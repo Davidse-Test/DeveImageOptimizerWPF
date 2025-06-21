@@ -2,55 +2,45 @@
 using IX.Observable;
 using System;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 
 namespace DeveImageOptimizerWPF
 {
     /// <summary>
-    /// Interaction logic for LogViewer.xaml
+    /// Interaction logic for LogViewer.axaml
     /// </summary>
     public partial class LogViewer : UserControl
     {
-        public static readonly DependencyProperty LogLinesProperty = DependencyProperty.Register(
+        public static readonly StyledProperty<ObservableQueue<LogEntry>> LogLinesProperty = AvaloniaProperty.Register<LogViewer, ObservableQueue<LogEntry>>(
             "LogLines",
-            typeof(ObservableQueue<LogEntry>),
-            typeof(LogViewer),
-            new PropertyMetadata(new ObservableQueue<LogEntry>(new List<LogEntry>() { new LogEntry() { DateTime = DateTime.Now, Index = 0, Message = "Test" } })));
+            new ObservableQueue<LogEntry>(new List<LogEntry>() { new LogEntry() { DateTime = DateTime.Now, Index = 0, Message = "Test" } }));
 
         public ObservableQueue<LogEntry> LogLines
         {
-            get
-            {
-                return (ObservableQueue<LogEntry>)GetValue(LogLinesProperty);
-            }
-            set
-            {
-                SetValue(LogLinesProperty, value);
-            }
+            get => GetValue(LogLinesProperty);
+            set => SetValue(LogLinesProperty, value);
         }
 
-        public static readonly DependencyProperty LogViewerFontSizeProperty = DependencyProperty.Register(
-                    "LogViewerFontSize",
-                    typeof(int),
-                    typeof(LogViewer),
-                    new PropertyMetadata(12));
+        public static readonly StyledProperty<int> LogViewerFontSizeProperty = AvaloniaProperty.Register<LogViewer, int>(
+            "LogViewerFontSize", 
+            12);
 
         public int LogViewerFontSize
         {
-            get
-            {
-                return (int)GetValue(LogViewerFontSizeProperty);
-            }
-            set
-            {
-                SetValue(LogViewerFontSizeProperty, value);
-            }
+            get => GetValue(LogViewerFontSizeProperty);
+            set => SetValue(LogViewerFontSizeProperty, value);
         }
 
         public LogViewer()
         {
             InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
         }
     }
 }

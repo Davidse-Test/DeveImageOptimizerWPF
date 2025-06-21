@@ -1,23 +1,37 @@
-﻿using DeveImageOptimizerWPF.Helpers;
+using DeveImageOptimizerWPF.Helpers;
 using DeveImageOptimizerWPF.ViewModel.ObservableData;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using PropertyChanged;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Windows.Input;
 
 namespace DeveImageOptimizerWPF.ViewModel
 {
-    [AddINotifyPropertyChangedInterface]
-    public class ConsoleViewModel : ObservableRecipient
+    public class ConsoleViewModel : ObservableObject
     {
-        public LoggerExtractinator LoggerExtractinator { get; set; }
+        private LoggerExtractinator _loggerExtractinator;
+        public LoggerExtractinator LoggerExtractinator
+        {
+            get => _loggerExtractinator;
+            set => SetProperty(ref _loggerExtractinator, value);
+        }
 
-        public int ConsoleFontSize { get; set; } = 12;
+        private int _consoleFontSize = 12;
+        public int ConsoleFontSize
+        {
+            get => _consoleFontSize;
+            set => SetProperty(ref _consoleFontSize, value);
+        }
+
         public ICommand IncreaseFontSizeCommand { get; }
         public ICommand DecreaseFontSizeCommand { get; }
 
-        public ScrollViewerExtensionConfig ScrollConfig { get; set; } = new ScrollViewerExtensionConfig() { AlwaysScrollToEnd = true };
+        private ScrollViewerExtensionConfig _scrollConfig = new ScrollViewerExtensionConfig() { AlwaysScrollToEnd = true };
+        public ScrollViewerExtensionConfig ScrollConfig
+        {
+            get => _scrollConfig;
+            set => SetProperty(ref _scrollConfig, value);
+        }
 
         public ConsoleViewModel(LoggerExtractinator loggerExtractinator)
         {

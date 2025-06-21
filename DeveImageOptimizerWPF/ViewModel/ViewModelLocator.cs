@@ -34,19 +34,19 @@ namespace DeveImageOptimizerWPF.ViewModel
         public SettingsViewModel? Settings => ResolveViewModelOrThrow<SettingsViewModel>();
         public ConsoleViewModel? Console => ResolveViewModelOrThrow<ConsoleViewModel>();
 
-        private T ResolveViewModelOrThrow<T>()
+        private T ResolveViewModelOrThrow<T>() where T : class
         {
-            var viewModel = App.Current.Services.GetService<T>();
+            var viewModel = App.Current?.Services.GetService<T>();
             if (viewModel == null)
             {
-                throw new InvalidOperationException($"Could not resolve ViewModel {typeof(T).FullName}. Ensure it's configued in 'App.xaml.cs'");
+                throw new InvalidOperationException($"Could not resolve ViewModel {typeof(T).FullName}. Ensure it's configued in 'App.axaml.cs'");
             }
             return viewModel;
         }
 
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            // Clear the ViewModels if needed
         }
     }
 }

@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Data;
+using Avalonia.Collections;
 
 namespace DeveImageOptimizerWPF.State.MainWindowState
 {
@@ -20,7 +20,7 @@ namespace DeveImageOptimizerWPF.State.MainWindowState
         public AutoFilteringObservableCollection<OptimizableFileUI> ProcessedFiles { get; set; } = new AutoFilteringObservableCollection<OptimizableFileUI>();
         public OptimizableFileUI SelectedProcessedFile { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private readonly object _logfilelockject = new object();
 
@@ -32,34 +32,37 @@ namespace DeveImageOptimizerWPF.State.MainWindowState
             set
             {
                 _filter = value;
-                ProcessedFilesView.Refresh();
+                RefreshProcessedFilesView();
             }
         }
 
-
-        internal CollectionViewSource ProcessedFilesViewSource { get; set; } = new CollectionViewSource();
-        public ICollectionView ProcessedFilesView => ProcessedFilesViewSource.View;
-
+        private readonly AvaloniaList<OptimizableFileUI> _filteredFiles = new AvaloniaList<OptimizableFileUI>();
+        public AvaloniaList<OptimizableFileUI> ProcessedFilesView => _filteredFiles;
 
         public FileProgressState()
         {
-            ProcessedFilesViewSource.Source = ProcessedFiles;
-            ProcessedFilesViewSource.Filter += ApplyFilter;
+            RefreshProcessedFilesView();
+            ProcessedFiles.CollectionChanged += ProcessedFiles_CollectionChanged;
 
             _logPath = Path.Combine(FolderHelperMethods.ConfigFolder, "Log.txt");
         }
 
-        private void ApplyFilter(object sender, FilterEventArgs e)
+        private void ProcessedFiles_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            OptimizableFileUI fileUI = (OptimizableFileUI)e.Item;
+            RefreshProcessedFilesView();
+        }
 
-            if (_filter == null || fileUI.OptimizationResult == OptimizationResult.InProgress || fileUI.OptimizationResult == _filter.Value)
+        private void RefreshProcessedFilesView()
+        {
+            _filteredFiles.Clear();
+            var filtered = ProcessedFiles.Where(fileUI => 
+                _filter == null || 
+                fileUI.OptimizationResult == OptimizationResult.InProgress || 
+                fileUI.OptimizationResult == _filter.Value);
+            
+            foreach (var item in filtered)
             {
-                e.Accepted = true;
-            }
-            else
-            {
-                e.Accepted = false;
+                _filteredFiles.Add(item);
             }
         }
 

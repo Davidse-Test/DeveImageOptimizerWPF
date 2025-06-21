@@ -1,0 +1,16 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DeveImageOptimizerWPF"
+             xmlns:vm="using:DeveImageOptimizerWPF.ViewModel"
+             x:Class="DeveImageOptimizerWPF.App"
+             RequestedThemeVariant="Light">
+  <Application.Resources>
+    <ResourceDictionary>
+      <vm:ViewModelLocator x:Key="Locator" />
+    </ResourceDictionary>
+  </Application.Resources>
+  
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+</Application>
